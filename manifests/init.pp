@@ -53,6 +53,8 @@ class nrpe (
   $ssl_log_cipher              = false,
   $ssl_log_client_cert         = false,
   $ssl_log_client_cert_details = false,
+  $commands = {},
+  $plugins = {},
 ) inherits nrpe::params {
 
   if $manage_package {
@@ -116,5 +118,8 @@ class nrpe (
     recurse => $recurse,
     require => Package[$package_name],
   }
+
+  create_resources(nrpe::command, $commands)
+  create_resources(nrpe::hiera_plugin, $plugins)
 
 }
